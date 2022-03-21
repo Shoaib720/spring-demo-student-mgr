@@ -5,36 +5,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/students")
 public class StudentController {
 
-    private final StudentService studentService;
-
-    @Autowired
-    public StudentController (StudentService studentService) {
-        this.studentService = studentService;
-    }
-
     @GetMapping
-    public ResponseEntity<List<Student>> getStudents() throws Exception {
-        try{
-            List<Student> students = this.studentService.getStudents();
-            if (students.equals(null)){
-                throw new Exception("INTERNAL_SERVER_ERROR");
-            }
-            return ResponseEntity.ok().body(students);
-        }
-        catch (Exception e) {
-            throw e;
-        }
-    }
-
-    @PostMapping
-    public void registerStudent(@RequestBody Student student){
-        this.studentService.addStudent(student);
+    public List<Student> getStudents() throws Exception {
+        Student s = new Student(1L, "Shoaib Shaikh", "shoaib.shaikh@gmail.com", LocalDate.of(1994, Month.DECEMBER, 13));
+        return List.of(s);
     }
 
 }
